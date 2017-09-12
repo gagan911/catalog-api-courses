@@ -3,7 +3,6 @@ var cloudant = require('cloudant')(cloudantService.credentials.url);
 exports.cloudant = cloudant;
 var itemsDb = cloudant.use('items');
 exports.itemsDb = itemsDb;
-
 //populate the db with these items.
 var populateDB = function() {
 
@@ -82,6 +81,25 @@ var populateDB = function() {
     }   
 };
 exports.populateDB = populateDB;
+
+
+// Install request by running "npm install --save request"
+var request = require("request");
+
+var options = { method: 'POST',
+  url: 'https://api.coursera.org/api/partners.v1?Gtv4Xb1-EeS-ViIACwYKVQ&fields=language,description,banner,courseIds,instructorIds,links,location',
+  headers: 
+   { accept: 'application/json',
+     'content-type': 'application/json' },
+  body: { id: 5653607770750976 },
+  json: true };
+
+request(options, function (error, response, body) {
+  if (error) return console.error('Failed: %s', error.message);
+
+  console.log('Success: ', body);
+});
+
 
 //Initiate the database.
 var initDB = function() {
